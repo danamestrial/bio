@@ -1,5 +1,6 @@
 ---
 import Section from './Section.astro';
+import RepoStatus from './RepoStatus.astro';
 import type { Profile } from '../types/profile';
 
 interface Props {
@@ -38,7 +39,8 @@ const year = new Date().getFullYear();
     }
   </address>
 
-  <footer class="mt-20 border-t border-border pt-6 text-sm text-muted">
-    © {year} {name}. Built with Astro & Tailwind.
+  <footer class="mt-20 flex flex-col gap-3 border-t border-border pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+    <span>© {year} {name}. Built with Astro & Tailwind.</span>
+    <RepoStatus />
   </footer>
 </Section>
