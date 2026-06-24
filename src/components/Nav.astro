@@ -12,13 +12,13 @@ const { name, items } = Astro.props;
 
 <header class="sticky top-4 z-40 px-4">
   <nav
-    class="mx-auto flex max-w-3xl items-center gap-4 rounded-full border border-border bg-bg/70 px-4 py-2.5 shadow-lg shadow-black/30 backdrop-blur-md"
+    class="mx-auto flex w-fit max-w-full items-center gap-4 rounded-full border border-border bg-bg/70 px-4 py-2.5 shadow-lg shadow-black/30 backdrop-blur-md"
     aria-label="Primary"
   >
     <a href="#top" class="shrink-0 font-display text-sm font-semibold tracking-tight hover:text-accent">
       {name}
     </a>
-    <ul class="flex flex-1 gap-1 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <ul class="flex gap-1 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {
         items.map((item) => (
           <li>
