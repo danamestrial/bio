@@ -93,5 +93,34 @@ const ogImage = new URL(image, siteUrl).href;
         els.forEach((el) => io.observe(el));
       }
     </script>
+
+    <script>
+      // Fallback for mailto: links — some browsers/OSes (e.g. Edge with no
+      // default mail app) silently do nothing. Copy the address to the
+      // clipboard on click so the button is never a dead end. We don't
+      // preventDefault, so a configured mail client still opens.
+      const mailLinks = document.querySelectorAll<HTMLAnchorElement>('a[href^="mailto:"]');
+      if (mailLinks.length && navigator.clipboard) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.setAttribute('role', 'status');
+        document.body.appendChild(toast);
+        let timer: ReturnType<typeof setTimeout>;
+        mailLinks.forEach((a) =>
+          a.addEventListener('click', async () => {
+            const email = a.getAttribute('href')!.replace(/^mailto:/, '');
+            try {
+              await navigator.clipboard.writeText(email);
+              toast.textContent = `Copied ${email}`;
+              toast.classList.add('is-visible');
+              clearTimeout(timer);
+              timer = setTimeout(() => toast.classList.remove('is-visible'), 2400);
+            } catch {
+              /* clipboard blocked (e.g. insecure context) — mailto still fires */
+            }
+          })
+        );
+      }
+    </script>
   </body>
 </html>
