@@ -26,7 +26,10 @@ jobs:
         with:
           # Astro 7 requires Node >= 22.12 (the action defaults to 20).
           node-version: 22
-          package-manager: pnpm@latest
+          # Pin to the pnpm that generated the lockfile. `pnpm@latest` enforces a
+          # 24h minimumReleaseAge policy that rejects freshly-published deps
+          # (astro@7.0.2, vite@8.1.0, …) and fails install.
+          package-manager: pnpm@10.10.0
 
   deploy:
     needs: build
