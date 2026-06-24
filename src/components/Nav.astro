@@ -10,12 +10,12 @@ interface Props {
 const { name, items } = Astro.props;
 ---
 
-<header class="sticky top-0 z-40 border-b border-border bg-bg/80 backdrop-blur">
+<header class="sticky top-4 z-40 px-4">
   <nav
-    class="mx-auto flex max-w-4xl items-center gap-4 px-6 py-3"
+    class="mx-auto flex max-w-3xl items-center gap-4 rounded-full border border-border bg-bg/70 px-4 py-2.5 shadow-lg shadow-black/30 backdrop-blur-md"
     aria-label="Primary"
   >
-    <a href="#top" class="shrink-0 font-display font-semibold tracking-tight hover:text-accent">
+    <a href="#top" class="shrink-0 font-display text-sm font-semibold tracking-tight hover:text-accent">
       {name}
     </a>
     <ul class="flex flex-1 gap-1 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -25,7 +25,7 @@ const { name, items } = Astro.props;
             <a
               href={`#${item.id}`}
               data-nav={item.id}
-              class="rounded-md px-3 py-1.5 text-sm text-muted transition-colors hover:text-fg aria-[current=true]:text-accent"
+              class="rounded-full px-3 py-1.5 text-sm text-muted transition-colors hover:text-fg aria-[current=true]:text-accent"
             >
               {item.label}
             </a>
@@ -37,31 +37,50 @@ const { name, items } = Astro.props;
 </header>
 
 <script>
-  // Scroll-spy: mark the link whose section is currently in view as aria-current.
+  // Scroll-spy: highlight the section currently in view. A plain scroll handler
+  // (not IntersectionObserver) so the last/short section still activates when
+  // the page bottoms out before that section can reach the trigger band.
   const links = new Map<string, HTMLAnchorElement>();
   document.querySelectorAll<HTMLAnchorElement>('[data-nav]').forEach((a) =>
     links.set(a.dataset.nav!, a)
   );
+  const ids = [...links.keys()];
+  const sections = ids
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => el !== null);
 
   const setCurrent = (id: string) => {
-    for (const [key, a] of links) {
-      a.setAttribute('aria-current', String(key === id));
-    }
+    for (const [key, a] of links) a.setAttribute('aria-current', String(key === id));
   };
 
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setCurrent(entry.target.id);
-        }
-      },
-      // Trigger when a section crosses the upper third of the viewport.
-      { rootMargin: '-20% 0px -75% 0px' }
-    );
-    links.forEach((_, id) => {
-      const section = document.getElementById(id);
-      if (section) io.observe(section);
-    });
-  }
+  let ticking = false;
+  const spy = () => {
+    ticking = false;
+    // At (or near) the page bottom, the last section is the active one even if
+    // it never scrolls up to the trigger line.
+    const atBottom =
+      window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+    if (atBottom) {
+      setCurrent(ids[ids.length - 1]);
+      return;
+    }
+    // Otherwise: the last section whose top has crossed ~30% down the viewport.
+    const line = window.innerHeight * 0.3;
+    let current = ids[0];
+    for (const el of sections) {
+      if (el.getBoundingClientRect().top <= line) current = el.id;
+      else break;
+    }
+    setCurrent(current);
+  };
+
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(spy);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  spy();
 </script>
