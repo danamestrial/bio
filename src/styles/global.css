@@ -21,6 +21,11 @@ html {
   color-scheme: dark;
 }
 
+/* Keep section headings clear of the sticky nav when jumped to via anchor. */
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-fg);
