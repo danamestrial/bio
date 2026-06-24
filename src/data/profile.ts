@@ -196,7 +196,6 @@ export const profile: Profile = {
 
   links: [
     { label: 'Email', href: 'mailto:chayapolbun@gmail.com', display: 'chayapolbun@gmail.com', kind: 'email' },
-    { label: 'Phone', href: 'tel:+66917510606', display: '+66 (0)9-1751-0606', kind: 'phone' },
     { label: 'GitHub', href: 'https://github.com/danamestrial', display: 'github.com/danamestrial', kind: 'github' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/chayapol-bunnag', display: 'linkedin.com/in/chayapol-bunnag', kind: 'linkedin' },
   ],
