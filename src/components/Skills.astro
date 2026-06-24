@@ -1,0 +1,30 @@
+---
+import Section from './Section.astro';
+import type { Profile } from '../types/profile';
+
+interface Props {
+  skills: Profile['skills'];
+}
+const { skills } = Astro.props;
+---
+
+<Section id="skills" index="03" title="Skills">
+  <div class="grid gap-8 sm:grid-cols-2">
+    {
+      skills.map((group, i) => (
+        <div class="reveal" style={`--reveal-delay: ${i * 80}ms`}>
+          <h3 class="mb-3 font-mono text-xs uppercase tracking-widest text-muted">
+            {group.category}
+          </h3>
+          <ul class="flex flex-wrap gap-2">
+            {group.items.map((item) => (
+              <li class="rounded-md border border-border bg-surface px-3 py-1.5 text-sm transition-colors hover:border-accent hover:text-accent">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</Section>

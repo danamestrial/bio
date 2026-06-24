@@ -1,0 +1,13 @@
+---
+import Section from './Section.astro';
+import type { Profile } from '../types/profile';
+
+interface Props {
+  about: Profile['about'];
+}
+const { about } = Astro.props;
+---
+
+<Section id="about" index="01" title="About">
+  <p class="reveal max-w-2xl text-lg leading-relaxed text-muted">{about}</p>
+</Section>

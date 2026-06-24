@@ -1,0 +1,65 @@
+@import 'tailwindcss';
+
+/* Design tokens. Dark-mode-first with a single signal-lime accent.
+   Exposed to Tailwind utilities via @theme (text-accent, bg-surface, font-display…). */
+@theme {
+  --color-bg: #0a0b0d;
+  --color-surface: #121417;
+  --color-surface-2: #181b1f;
+  --color-border: #24282e;
+  --color-fg: #e8eaed;
+  --color-muted: #9aa1a9;
+  --color-accent: #c5f24d;
+  --color-accent-dim: #8aa82f;
+
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Scroll-reveal: elements start hidden, JS toggles .is-visible when in view. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Honour reduced-motion: no transforms, no smooth scroll, content always shown. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #0a0b0d;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}

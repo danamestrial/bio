@@ -1,0 +1,70 @@
+---
+import type { Profile } from '../types/profile';
+
+interface Props {
+  name: Profile['name'];
+  headline: Profile['headline'];
+  location: Profile['location'];
+  links: Profile['links'];
+  resumeUrl: Profile['resumeUrl'];
+}
+const { name, headline, location, links, resumeUrl } = Astro.props;
+const primary = links.filter((l) => l.kind === 'email' || l.kind === 'github' || l.kind === 'linkedin');
+---
+
+<header
+  class="relative mx-auto flex min-h-[88vh] w-full max-w-4xl flex-col justify-center px-6 py-24"
+>
+  <!-- ambient accent glow -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-accent/10 blur-3xl"
+  >
+  </div>
+
+  <p class="reveal mb-5 flex items-center gap-2 font-mono text-sm text-accent">
+    <span class="inline-block h-2 w-2 rounded-full bg-accent"></span>
+    {location}
+  </p>
+
+  <h1
+    class="reveal font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl"
+    style="--reveal-delay: 80ms"
+  >
+    {name}
+  </h1>
+
+  <p
+    class="reveal mt-5 max-w-xl text-xl text-muted md:text-2xl"
+    style="--reveal-delay: 160ms"
+  >
+    {headline}
+  </p>
+
+  <nav
+    class="reveal mt-10 flex flex-wrap gap-3"
+    aria-label="Primary links"
+    style="--reveal-delay: 240ms"
+  >
+    <a
+      href={resumeUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-bg transition-opacity hover:opacity-90"
+    >
+      Download CV ↓
+    </a>
+    {
+      primary.map((link) => (
+        <a
+          href={link.href}
+          target={link.kind === 'email' ? undefined : '_blank'}
+          rel={link.kind === 'email' ? undefined : 'noopener noreferrer'}
+          class="rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent"
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>

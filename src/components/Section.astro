@@ -1,0 +1,18 @@
+---
+// Generic section shell: anchored heading + consistent spacing + reveal hook.
+interface Props {
+  id: string;
+  index: string;
+  title: string;
+}
+const { id, index, title } = Astro.props;
+---
+
+<section id={id} class="mx-auto w-full max-w-4xl px-6 py-20 md:py-28">
+  <h2 class="reveal mb-10 flex items-baseline gap-3 font-display text-2xl font-semibold tracking-tight md:text-3xl">
+    <span class="font-mono text-base text-accent" aria-hidden="true">{index}</span>
+    {title}
+    <span class="ml-2 h-px flex-1 translate-y-[-2px] bg-border" aria-hidden="true"></span>
+  </h2>
+  <slot />
+</section>

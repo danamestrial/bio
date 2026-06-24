@@ -1,0 +1,44 @@
+---
+import Section from './Section.astro';
+import type { Profile } from '../types/profile';
+
+interface Props {
+  name: Profile['name'];
+  links: Profile['links'];
+}
+const { name, links } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<Section id="contact" index="06" title="Get in touch">
+  <p class="reveal mb-8 max-w-xl text-lg text-muted">
+    Open to opportunities and collaborations. The fastest way to reach me is below.
+  </p>
+
+  <address class="reveal grid gap-3 not-italic sm:grid-cols-2">
+    {
+      links.map((link) => (
+        <a
+          href={link.href}
+          target={link.kind === 'email' || link.kind === 'phone' ? undefined : '_blank'}
+          rel={link.kind === 'email' || link.kind === 'phone' ? undefined : 'noopener noreferrer'}
+          class="group flex items-center justify-between rounded-lg border border-border bg-surface px-5 py-4 transition-colors hover:border-accent"
+        >
+          <span>
+            <span class="block font-mono text-xs uppercase tracking-wide text-muted">
+              {link.label}
+            </span>
+            <span class="mt-0.5 block group-hover:text-accent">{link.display}</span>
+          </span>
+          <span class="text-muted transition-transform group-hover:translate-x-1 group-hover:text-accent" aria-hidden="true">
+            →
+          </span>
+        </a>
+      ))
+    }
+  </address>
+
+  <footer class="mt-20 border-t border-border pt-6 text-sm text-muted">
+    © {year} {name}. Built with Astro & Tailwind.
+  </footer>
+</Section>

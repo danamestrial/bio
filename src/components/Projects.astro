@@ -1,0 +1,22 @@
+---
+import Section from './Section.astro';
+import Card from './Card.astro';
+import type { Profile } from '../types/profile';
+
+interface Props {
+  projects: Profile['projects'];
+}
+const { projects } = Astro.props;
+---
+
+<Section id="projects" index="04" title="Projects">
+  <div class="grid gap-5 sm:grid-cols-2">
+    {
+      projects.map((project, i) => (
+        <div class="reveal" style={`--reveal-delay: ${(i % 2) * 80}ms`}>
+          <Card project={project} />
+        </div>
+      ))
+    }
+  </div>
+</Section>

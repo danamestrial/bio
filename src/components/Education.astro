@@ -1,0 +1,41 @@
+---
+import Section from './Section.astro';
+import type { Profile } from '../types/profile';
+
+interface Props {
+  education: Profile['education'];
+  awards: Profile['awards'];
+}
+const { education, awards } = Astro.props;
+---
+
+<Section id="education" index="05" title="Education & Awards">
+  <div class="grid gap-10 md:grid-cols-2">
+    <div>
+      {
+        education.map((edu) => (
+          <article class="reveal">
+            <h3 class="font-display text-lg font-semibold">{edu.institution}</h3>
+            <p class="mt-1 text-fg/90">{edu.degree}</p>
+            <p class="mt-1 text-sm text-muted">
+              {edu.location} · <span class="font-mono">{edu.period}</span>
+            </p>
+            {edu.note && <p class="mt-2 text-sm text-muted">{edu.note}</p>}
+          </article>
+        ))
+      }
+    </div>
+
+    <ul class="space-y-6">
+      {
+        awards.map((award, i) => (
+          <li class="reveal" style={`--reveal-delay: ${i * 80}ms`}>
+            <p class="font-mono text-xs uppercase tracking-wide text-accent">{award.period}</p>
+            <h3 class="mt-1 font-medium">{award.title}</h3>
+            <p class="mt-1 text-sm leading-relaxed text-muted">{award.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Section>

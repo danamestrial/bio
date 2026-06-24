@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chayapolb.me/sitemap-index.xml

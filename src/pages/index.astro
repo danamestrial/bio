@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import Projects from '../components/Projects.astro';
+import Education from '../components/Education.astro';
+import Contact from '../components/Contact.astro';
+import { profile } from '../data/profile';
+
+const description = `${profile.name} — ${profile.headline} based in ${profile.location}.`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  jobTitle: profile.headline,
+  address: { '@type': 'PostalAddress', addressLocality: profile.location },
+  alumniOf: profile.education.map((e) => e.institution),
+  knowsAbout: profile.skills.flatMap((g) => g.items),
+  sameAs: profile.links
+    .filter((l) => l.kind === 'github' || l.kind === 'linkedin')
+    .map((l) => l.href),
+};
+---
+
+<BaseLayout title={`${profile.name} · ${profile.headline}`} description={description} jsonLd={jsonLd}>
+  <Hero
+    name={profile.name}
+    headline={profile.headline}
+    location={profile.location}
+    links={profile.links}
+    resumeUrl={profile.resumeUrl}
+  />
+  <main id="main">
+    <About about={profile.about} />
+    <Experience experience={profile.experience} />
+    <Skills skills={profile.skills} />
+    <Projects projects={profile.projects} />
+    <Education education={profile.education} awards={profile.awards} />
+    <Contact name={profile.name} links={profile.links} />
+  </main>
+</BaseLayout>
