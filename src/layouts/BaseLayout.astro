@@ -95,6 +95,20 @@ const ogImage = new URL(image, siteUrl).href;
     </script>
 
     <script>
+      // Cursor-follow spotlight: any element marked [data-spotlight] gets its
+      // --mx/--my CSS vars set on pointermove. CSS does the rest.
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll<HTMLElement>('[data-spotlight]').forEach((el) => {
+          el.addEventListener('pointermove', (e) => {
+            const r = el.getBoundingClientRect();
+            el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+            el.style.setProperty('--my', `${e.clientY - r.top}px`);
+          });
+        });
+      }
+    </script>
+
+    <script>
       // Fallback for mailto: links — some browsers/OSes (e.g. Edge with no
       // default mail app) silently do nothing. Copy the address to the
       // clipboard on click so the button is never a dead end. We don't

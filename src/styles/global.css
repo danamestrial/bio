@@ -97,3 +97,130 @@ body {
   outline-offset: 3px;
   border-radius: 2px;
 }
+
+/* Hero backdrop: subtle dotted grid + a slow drifting accent blob.
+   Pure CSS — masked so it fades at edges; opacity light so text wins. */
+.hero-grid {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(232, 234, 237, 0.08) 1px, transparent 0);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 40%, transparent 75%);
+  mask-image: radial-gradient(ellipse at 50% 35%, #000 40%, transparent 75%);
+}
+.hero-blob {
+  background: radial-gradient(
+    closest-side,
+    rgba(197, 242, 77, 0.22),
+    rgba(197, 242, 77, 0.06) 60%,
+    transparent 75%
+  );
+  animation: blob-drift 14s ease-in-out infinite alternate;
+}
+@keyframes blob-drift {
+  0%   { transform: translate(-50%, -50%) translate(-8%, -4%) scale(1); }
+  100% { transform: translate(-50%, -50%) translate( 8%,  4%) scale(1.08); }
+}
+
+/* Pulse halo around the live location dot. */
+.dot-pulse {
+  position: relative;
+}
+.dot-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  border: 1px solid var(--color-accent);
+  opacity: 0.6;
+  animation: dot-pulse 1.8s ease-out infinite;
+}
+@keyframes dot-pulse {
+  0%   { transform: scale(0.6); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* Animated gradient sweep for the name. */
+.name-shine {
+  background: linear-gradient(
+    100deg,
+    var(--color-fg) 0%,
+    var(--color-fg) 40%,
+    var(--color-accent) 50%,
+    var(--color-fg) 60%,
+    var(--color-fg) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: name-sweep 6s ease-in-out infinite;
+}
+@keyframes name-sweep {
+  0%, 100% { background-position: 100% 0; }
+  50%      { background-position: 0    0; }
+}
+
+/* Cursor-follow spotlight. JS sets --mx/--my on the element. */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(197, 242, 77, 0.14),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 0;
+}
+.spotlight:hover::before { opacity: 1; }
+.spotlight > * { position: relative; z-index: 1; }
+
+/* Lift on hover for tactile feedback. */
+.lift {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px -20px rgba(197, 242, 77, 0.35);
+}
+
+/* Section heading: divider line grows in from the heading. */
+.section-rule {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent) 0%,
+    var(--color-border) 30%,
+    var(--color-border) 100%
+  );
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  transition: background-position 1.2s ease;
+}
+.reveal.is-visible .section-rule {
+  background-position: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-blob,
+  .dot-pulse::after,
+  .name-shine {
+    animation: none;
+  }
+  .name-shine {
+    background: none;
+    color: var(--color-fg);
+    -webkit-background-clip: initial;
+    background-clip: initial;
+  }
+  .spotlight::before,
+  .lift { transition: none; }
+  .lift:hover { transform: none; box-shadow: none; }
+}

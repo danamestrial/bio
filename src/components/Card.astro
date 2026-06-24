@@ -14,7 +14,8 @@ const linkAttrs = project.href
 
 <Tag
   {...linkAttrs}
-  class="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 transition-colors hover:border-accent/60"
+  data-spotlight
+  class="spotlight lift group flex h-full flex-col rounded-xl border border-border bg-surface p-6 hover:border-accent/60"
 >
   <div class="flex items-start justify-between gap-4">
     <h3 class="font-display text-lg font-semibold group-hover:text-accent">{project.name}</h3>

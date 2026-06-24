@@ -12,7 +12,7 @@ const { id, index, title } = Astro.props;
   <h2 class="reveal mb-10 flex items-baseline gap-3 font-display text-2xl font-semibold tracking-tight md:text-3xl">
     <span class="font-mono text-base text-accent" aria-hidden="true">{index}</span>
     {title}
-    <span class="ml-2 h-px flex-1 translate-y-[-2px] bg-border" aria-hidden="true"></span>
+    <span class="section-rule ml-2 h-px flex-1 translate-y-[-2px]" aria-hidden="true"></span>
   </h2>
   <slot />
 </section>
