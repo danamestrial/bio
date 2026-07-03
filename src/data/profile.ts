@@ -19,7 +19,7 @@ export const profile: Profile = {
       location: 'Bangkok, Thailand',
       summary:
         'Ship features across the mobile app and the Go backend services of a logistics SaaS platform, working day to day with an engineering team spread across Asia and the Americas.',
-      skills: ['Go', 'TypeScript', 'Mobile App Development'],
+      skills: ['Go', 'TypeScript', 'Mobile App Development', 'CI/CD'],
       roles: [
         {
           title: 'Software Engineer',
