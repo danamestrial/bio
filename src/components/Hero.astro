@@ -4,11 +4,12 @@ import type { Profile } from '../types/profile';
 interface Props {
   name: Profile['name'];
   headline: Profile['headline'];
+  tagline: Profile['tagline'];
   location: Profile['location'];
   links: Profile['links'];
   resumeUrl: Profile['resumeUrl'];
 }
-const { name, headline, location, links, resumeUrl } = Astro.props;
+const { name, headline, tagline, location, links, resumeUrl } = Astro.props;
 const primary = links.filter((l) => l.kind === 'email' || l.kind === 'github' || l.kind === 'linkedin');
 ---
 
@@ -39,7 +40,7 @@ const primary = links.filter((l) => l.kind === 'email' || l.kind === 'github' ||
       class="reveal mt-5 max-w-xl text-xl text-muted md:text-2xl"
       style="--reveal-delay: 160ms"
     >
-      {headline}
+      {headline} <span aria-hidden="true">—</span> <span class="text-fg">{tagline}</span>
     </p>
 
     <nav

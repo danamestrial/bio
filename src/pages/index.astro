@@ -10,7 +10,7 @@ import Education from '../components/Education.astro';
 import Contact from '../components/Contact.astro';
 import { profile } from '../data/profile';
 
-const description = `${profile.name} — ${profile.headline} based in ${profile.location}.`;
+const description = `${profile.name} — ${profile.headline} in ${profile.location}. ${profile.tagline}.`;
 
 const navItems = [
   { id: 'about', label: 'About' },
@@ -40,6 +40,7 @@ const jsonLd = {
   <Hero
     name={profile.name}
     headline={profile.headline}
+    tagline={profile.tagline}
     location={profile.location}
     links={profile.links}
     resumeUrl={profile.resumeUrl}

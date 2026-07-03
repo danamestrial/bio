@@ -60,6 +60,8 @@ export interface Award {
 export interface Profile {
   name: string;
   headline: string;
+  /** short specialties line shown after the headline and in the meta description */
+  tagline: string;
   location: string;
   about: string;
   /** path to the downloadable resume in /public */

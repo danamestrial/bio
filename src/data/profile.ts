@@ -7,17 +7,18 @@ export const profile: Profile = {
   // LinkedIn headline is the playful "A certain Computer Scientist"; using the
   // current role for clarity on a portfolio.
   headline: 'Software Engineer',
+  tagline: 'Go backends, mobile apps & Kubernetes',
   location: 'Bangkok, Thailand',
   resumeUrl: '/chayapol-bunnag-cv.pdf',
   about:
-    'Software Engineer at Certu Systems and Computer Science graduate from Mahidol University. I work across the stack — from Go backends and mobile apps to Kubernetes, CI/CD, and end-to-end test automation. I enjoy building scalable systems, breaking down hard problems, and teaching what I learn along the way.',
+    'I build logistics software at Certu Systems in Bangkok — Go services on the backend, the mobile app up front. Before that I packaged a big-data platform for Kubernetes, built CI/CD pipelines, wrote end-to-end test suites, and spent three years as a teaching assistant across five computer science courses at Mahidol University. I like scalable systems, hard problems broken down properly, and teaching what I learn along the way.',
 
   experience: [
     {
       company: 'Certu Systems',
       location: 'Bangkok, Thailand',
       summary:
-        'Building products for Certu Systems’ logistics SaaS platform across mobile and backend — Go services and mobile application development — working with an engineering team that spans Asia and the Americas.',
+        'Ship features across the mobile app and the Go backend services of a logistics SaaS platform, working day to day with an engineering team spread across Asia and the Americas.',
       skills: ['Go', 'TypeScript', 'Mobile App Development'],
       roles: [
         {
@@ -36,7 +37,7 @@ export const profile: Profile = {
       company: 'Blendata',
       location: 'Bangkok, Thailand',
       summary:
-        'Brought Blendata Enterprise up on a Helm chart and built CI/CD pipelines on Jenkins.',
+        'Packaged Blendata Enterprise, a big-data platform, into a Helm chart for repeatable Kubernetes deployments, and built the Jenkins CI/CD pipelines around it.',
       skills: ['Jenkins', 'Kubernetes', 'Helm', 'Linux'],
       roles: [
         {
@@ -52,7 +53,7 @@ export const profile: Profile = {
       company: 'Astro Innovation',
       location: 'Remote',
       summary:
-        'Designed and implemented the messaging feature of the app, streaming data to and from Firebase in real time.',
+        'Designed and built the app’s real-time messaging feature end to end, streaming data to and from Firebase.',
       skills: ['Flutter', 'Dart', 'Firebase'],
       roles: [
         {
@@ -80,7 +81,7 @@ export const profile: Profile = {
       company: 'Mahidol University International College',
       location: 'Salaya, Thailand',
       summary:
-        'TA for Intro to Computer Programming, Data Structures, System Skills & Low-Level Programming, Computer Systems & Architecture, and Functional & Parallel Programming.',
+        'Taught and mentored students across five courses over three years: Intro to Computer Programming, Data Structures, System Skills & Low-Level Programming, Computer Systems & Architecture, and Functional & Parallel Programming.',
       skills: ['C', 'C++', 'Java', 'Scala', 'Rust', 'Python', 'Bash', 'Linux', 'Mentoring'],
       roles: [
         {
@@ -110,9 +111,9 @@ export const profile: Profile = {
   skills: [
     {
       category: 'Languages',
-      // Inference: CV prints "C, C++, C" — the third is read as C# (consistent
-      // with the Unity / C# project below).
-      items: ['Go', 'C', 'C++', 'C#', 'Java', 'Python', 'Rust', 'Scala', 'Dart', 'JavaScript', 'TypeScript', 'SQL', 'NoSQL'],
+      // Trimmed to the interview-ready set; the long tail (C, C#, Java, Scala…)
+      // still shows in the experience/project entries where it was actually used.
+      items: ['Go', 'TypeScript', 'JavaScript', 'Dart', 'Python', 'C++', 'Rust', 'SQL'],
     },
     {
       category: 'Frameworks',
@@ -129,6 +130,14 @@ export const profile: Profile = {
   ],
 
   projects: [
+    {
+      name: 'chayapolb.me',
+      period: 'Jun 2026',
+      stack: ['Astro', 'Tailwind CSS', 'TypeScript'],
+      description:
+        'This site. A single-page portfolio where all content lives in one typed data file — components render props, nothing hardcoded. Ships as pure static HTML with zero client-side framework, with build-time repo status in the footer.',
+      href: 'https://github.com/danamestrial/bio',
+    },
     {
       name: 'Zombie Quest',
       period: 'Mar 2024',
@@ -154,20 +163,20 @@ export const profile: Profile = {
       href: 'https://github.com/polpon',
     },
     {
-      name: 'Circle OpenChat',
-      period: 'Jul 2022',
-      stack: ['Rust'],
-      description:
-        'A take on "Line OpenChat" implemented in Rust to exploit parallelism in the backend.',
-      href: 'https://github.com/danamestrial/rust-chatserver',
-    },
-    {
       name: 'Xpress Ready',
       period: 'Apr 2023',
       stack: ['Flutter', 'Firebase'],
       description:
         'A mobile app helping drivers respond to unexpected road accidents — guidance for the moments when people panic and are unsure how to react.',
       href: 'https://github.com/danamestrial/xpressready',
+    },
+    {
+      name: 'Circle OpenChat',
+      period: 'Jul 2022',
+      stack: ['Rust'],
+      description:
+        'A take on "Line OpenChat" implemented in Rust to exploit parallelism in the backend.',
+      href: 'https://github.com/danamestrial/rust-chatserver',
     },
     {
       name: 'Spot the Difference',
