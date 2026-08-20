@@ -9,33 +9,43 @@ interface Props {
 const { education, awards } = Astro.props;
 ---
 
-<Section id="education" index="05" title="Education & Awards">
-  <div class="grid gap-10 md:grid-cols-2">
+<Section id="education" index="05" title="Education & Awards" kicker="background">
+  <div class="grid gap-x-10 gap-y-12 md:grid-cols-2">
     <div>
-      {
-        education.map((edu) => (
-          <article class="reveal">
-            <h3 class="font-display text-lg font-semibold">{edu.institution}</h3>
-            <p class="mt-1 text-fg/90">{edu.degree}</p>
-            <p class="mt-1 text-sm text-muted">
-              {edu.location} · <span class="font-mono">{edu.period}</span>
-            </p>
-            {edu.note && <p class="mt-2 text-sm text-muted">{edu.note}</p>}
-          </article>
-        ))
-      }
+      <h3 class="reveal mb-5 font-mono text-xs uppercase tracking-widest text-accent-dim">
+        Education
+      </h3>
+      <ol class="space-y-6">
+        {
+          education.map((edu, i) => (
+            <li class="reveal border-l border-border pl-5" style={`--reveal-delay: ${i * 60}ms`}>
+              <h4 class="font-display text-lg font-semibold">{edu.institution}</h4>
+              <p class="mt-1 text-fg/90">{edu.degree}</p>
+              <p class="mt-1 font-mono text-xs text-faint">
+                {edu.location} · {edu.period}
+              </p>
+              {edu.note && <p class="mt-2 text-sm text-muted">{edu.note}</p>}
+            </li>
+          ))
+        }
+      </ol>
     </div>
 
-    <ul class="space-y-6">
-      {
-        awards.map((award, i) => (
-          <li class="reveal" style={`--reveal-delay: ${i * 80}ms`}>
-            <p class="font-mono text-xs uppercase tracking-wide text-accent">{award.period}</p>
-            <h3 class="mt-1 font-medium">{award.title}</h3>
-            <p class="mt-1 text-sm leading-relaxed text-muted">{award.description}</p>
-          </li>
-        ))
-      }
-    </ul>
+    <div>
+      <h3 class="reveal mb-5 font-mono text-xs uppercase tracking-widest text-accent-dim">
+        Awards & Recognition
+      </h3>
+      <ol class="space-y-6">
+        {
+          awards.map((award, i) => (
+            <li class="reveal border-l border-border pl-5" style={`--reveal-delay: ${i * 60}ms`}>
+              <p class="font-mono text-xs text-accent">{award.period}</p>
+              <h4 class="mt-1 font-medium">{award.title}</h4>
+              <p class="mt-1 text-sm leading-relaxed text-muted">{award.description}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
   </div>
 </Section>

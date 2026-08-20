@@ -12,6 +12,17 @@ import { profile } from '../data/profile';
 
 const description = `${profile.name} — ${profile.headline} in ${profile.location}. ${profile.tagline}.`;
 
+// Hero figures, derived from the data so they never drift out of sync.
+const startYears = profile.experience.flatMap((e) => e.roles.map((r) => Number(r.start.slice(0, 4))));
+const years = new Date().getFullYear() - Math.min(...startYears);
+const languageCount = profile.skills.find((s) => s.category === 'Languages')?.items.length ?? 0;
+const stats = [
+  { value: `${years}+`, label: 'yrs coding' },
+  { value: String(profile.experience.length), label: 'workplaces' },
+  { value: String(profile.projects.length), label: 'projects' },
+  { value: String(languageCount), label: 'languages' },
+];
+
 const navItems = [
   { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
@@ -44,6 +55,7 @@ const jsonLd = {
     location={profile.location}
     links={profile.links}
     resumeUrl={profile.resumeUrl}
+    stats={stats}
   />
   <main id="main">
     <About about={profile.about} />

@@ -12,15 +12,20 @@ const { name, items } = Astro.props;
 
 <header class="sticky top-4 z-40 px-4">
   <nav
-    class="mx-auto flex w-fit max-w-full items-center gap-4 rounded-full border border-border bg-bg/70 px-4 py-2.5 shadow-lg shadow-black/30 backdrop-blur-md"
+    class="mx-auto flex w-fit max-w-full items-center rounded-full border border-border bg-bg/70 py-2 pl-4 pr-2 shadow-lg shadow-black/40 backdrop-blur-md"
     aria-label="Primary"
   >
-    <a href="#top" class="shrink-0 font-display text-sm font-semibold tracking-tight hover:text-accent">
+    <a
+      href="#top"
+      data-brand
+      class="nav-brand flex shrink-0 items-center gap-2 font-display text-sm font-semibold tracking-tight hover:text-accent"
+    >
+      <span class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>
       {name}
     </a>
     <ul
       data-nav-list
-      class="flex gap-1 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      class="flex gap-0.5 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       {
         items.map((item) => (
@@ -28,7 +33,7 @@ const { name, items } = Astro.props;
             <a
               href={`#${item.id}`}
               data-nav={item.id}
-              class="rounded-full px-3 py-1.5 text-sm text-muted transition-colors hover:text-fg aria-[current=true]:text-accent"
+              class="rounded-full px-3 py-1.5 font-mono text-xs uppercase tracking-wide text-muted transition-colors hover:text-fg aria-[current=true]:bg-surface-2 aria-[current=true]:text-accent"
             >
               {item.label}
             </a>
@@ -44,7 +49,55 @@ const { name, items } = Astro.props;
   ul.can-scroll-right {
     mask-image: linear-gradient(to right, black calc(100% - 2.5rem), transparent);
   }
+
+  /* Brand is hidden while the hero name is on screen, then slides in once the
+     hero name scrolls out of view (toggled by [data-brand].is-shown via JS).
+     Collapsing max-width keeps it out of the flow so the links sit flush left. */
+  .nav-brand {
+    max-width: 0;
+    margin-right: 0;
+    opacity: 0;
+    transform: translateX(-6px);
+    overflow: hidden;
+    white-space: nowrap;
+    transition:
+      max-width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      margin-right 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.3s ease,
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .nav-brand.is-shown {
+    max-width: 14rem;
+    margin-right: 0.75rem;
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-brand {
+      transform: none;
+      transition: opacity 0.2s ease;
+    }
+  }
 </style>
+
+<script>
+  // Reveal the navbar name only once the hero name has scrolled out from under
+  // the sticky nav — no point showing it twice while the big one is on screen.
+  const brand = document.querySelector<HTMLElement>('[data-brand]');
+  const heroName = document.querySelector<HTMLElement>('[data-hero-name]');
+  if (brand && heroName && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      ([entry]) => brand.classList.toggle('is-shown', !entry.isIntersecting),
+      // Shrink the root's top by the nav's height so the flip happens exactly as
+      // the hero name passes behind the nav, not when it hits the viewport top.
+      { rootMargin: '-72px 0px 0px 0px', threshold: 0 }
+    );
+    io.observe(heroName);
+  } else {
+    // No hero name / no observer support: fall back to always showing it.
+    brand?.classList.add('is-shown');
+  }
+</script>
 
 <script>
   // Scroll-spy: highlight the section currently in view. A plain scroll handler
