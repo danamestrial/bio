@@ -7,16 +7,22 @@ interface Props {
   projects: Profile['projects'];
 }
 const { projects } = Astro.props;
+const [featured, ...rest] = projects;
 ---
 
-<Section id="projects" index="04" title="Projects">
-  <div class="grid gap-5 sm:grid-cols-2">
-    {
-      projects.map((project, i) => (
-        <div class="reveal" style={`--reveal-delay: ${(i % 2) * 80}ms`}>
-          <Card project={project} />
-        </div>
-      ))
-    }
+<Section id="projects" index="04" title="Projects" kicker="selected work">
+  <div class="grid gap-4">
+    <div class="reveal">
+      <Card project={featured} featured />
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      {
+        rest.map((project, i) => (
+          <div class="reveal" style={`--reveal-delay: ${(i % 2) * 60}ms`}>
+            <Card project={project} />
+          </div>
+        ))
+      }
+    </div>
   </div>
 </Section>

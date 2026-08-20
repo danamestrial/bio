@@ -1,18 +1,40 @@
 ---
-// Generic section shell: anchored heading + consistent spacing + reveal hook.
+// Spec-sheet section shell: a sticky numbered left rail + content column.
+// On mobile the rail collapses into an inline marker above the heading.
 interface Props {
   id: string;
   index: string;
   title: string;
+  /** short mono kicker shown above the heading, e.g. "what I do" */
+  kicker?: string;
 }
-const { id, index, title } = Astro.props;
+const { id, index, title, kicker } = Astro.props;
 ---
 
-<section id={id} class="mx-auto w-full max-w-4xl px-6 py-20 md:py-28">
-  <h2 class="reveal mb-10 flex items-baseline gap-3 font-display text-2xl font-semibold tracking-tight md:text-3xl">
-    <span class="font-mono text-base text-accent" aria-hidden="true">{index}</span>
-    {title}
-    <span class="section-rule ml-2 h-px flex-1 translate-y-[-2px]" aria-hidden="true"></span>
-  </h2>
-  <slot />
+<section
+  id={id}
+  class="mx-auto grid w-full max-w-5xl grid-cols-1 gap-x-10 px-6 py-16 md:grid-cols-[6rem_1fr] md:py-24"
+>
+  <!-- Left rail: big mono section number, wired to the page guide. -->
+  <div class="reveal relative mb-6 md:mb-0">
+    <div class="rail-dot relative pl-5 md:sticky md:top-24">
+      <span class="font-mono text-sm font-medium tabular-nums text-accent">{index}</span>
+      <span class="ml-2 font-mono text-[11px] uppercase tracking-widest text-faint md:hidden">
+        {title}
+      </span>
+    </div>
+  </div>
+
+  <div class="min-w-0">
+    <header class="reveal mb-8">
+      {kicker && (
+        <p class="mb-2 font-mono text-xs uppercase tracking-widest text-accent-dim">{kicker}</p>
+      )}
+      <h2 class="flex items-baseline gap-4 font-display text-3xl font-semibold tracking-tight md:text-4xl">
+        {title}
+        <span class="section-rule h-px flex-1 translate-y-[-4px]" aria-hidden="true"></span>
+      </h2>
+    </header>
+    <slot />
+  </div>
 </section>

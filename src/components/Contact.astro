@@ -11,9 +11,10 @@ const { name, links } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<Section id="contact" index="06" title="Get in touch">
-  <p class="reveal mb-8 max-w-xl text-lg text-muted">
-    Open to opportunities and collaborations. The fastest way to reach me is below.
+<Section id="contact" index="06" title="Get in touch" kicker="contact">
+  <p class="reveal mb-8 max-w-2xl text-xl leading-relaxed text-fg/90">
+    Happy to talk backend, mobile, or infrastructure. The fastest way to reach me
+    is below.
   </p>
 
   <address class="reveal grid gap-3 not-italic sm:grid-cols-2">
@@ -23,15 +24,18 @@ const year = new Date().getFullYear();
           href={link.href}
           target={link.kind === 'email' || link.kind === 'phone' ? undefined : '_blank'}
           rel={link.kind === 'email' || link.kind === 'phone' ? undefined : 'noopener noreferrer'}
-          class="group flex items-center justify-between rounded-lg border border-border bg-surface px-5 py-4 transition-colors hover:border-accent"
+          class="lift group flex items-center justify-between rounded-lg border border-border bg-surface px-5 py-4 transition-colors hover:border-accent"
         >
-          <span>
-            <span class="block font-mono text-xs uppercase tracking-wide text-muted">
+          <span class="min-w-0">
+            <span class="block font-mono text-[11px] uppercase tracking-widest text-faint">
               {link.label}
             </span>
-            <span class="mt-0.5 block group-hover:text-accent">{link.display}</span>
+            <span class="mt-1 block truncate group-hover:text-accent">{link.display}</span>
           </span>
-          <span class="text-muted transition-transform group-hover:translate-x-1 group-hover:text-accent" aria-hidden="true">
+          <span
+            class="ml-3 shrink-0 text-muted transition-transform group-hover:translate-x-1 group-hover:text-accent"
+            aria-hidden="true"
+          >
             →
           </span>
         </a>
@@ -39,8 +43,8 @@ const year = new Date().getFullYear();
     }
   </address>
 
-  <footer class="mt-20 flex flex-col gap-3 border-t border-border pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-    <span>© {year} {name}. Built with Astro & Tailwind.</span>
+  <footer class="mt-20 flex flex-col gap-3 border-t border-border pt-6 font-mono text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
+    <span>© {year} {name} · built with Astro & Tailwind</span>
     <RepoStatus />
   </footer>
 </Section>

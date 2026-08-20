@@ -54,7 +54,7 @@ const ogImage = new URL(image, siteUrl).href;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
     />
 
     <title>{title}</title>
@@ -67,8 +67,12 @@ const ogImage = new URL(image, siteUrl).href;
       Skip to content
     </a>
 
+    <div class="page-guides" aria-hidden="true"></div>
+
     <span id="top" aria-hidden="true"></span>
-    <slot />
+    <div class="relative z-10">
+      <slot />
+    </div>
 
     <script>
       // Scroll-triggered reveal via IntersectionObserver — no animation library.
